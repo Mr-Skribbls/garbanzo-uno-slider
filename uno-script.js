@@ -4,9 +4,9 @@ $(document).ready(function() {
         image_folder : 'imgs',
         last_slide : null,
         before_last_slide : null,
-        cycle_time : 3000,
+        cycle_time : 1000,
         slide_speed : 500,
-        random_slide : false,
+        random_slide : true,
         cycle_paused : false,
         slide_paused : false
     }
@@ -22,36 +22,38 @@ $(document).ready(function() {
         }
     }, globals.cycle_time);
     
-    $('#left_switch').on({
-        click : function() {
-            switcher('left');
-        },
-        mouseover : function() {
-            globals.slide_paused = true;
-        },
-        mouseleave : function() {
-            globals.slide_paused = false;
-        }
-    });
-    $('#right_switch').on({
-        click : function() {
-            switcher('right');
-        },
-        mouseover : function() {
-            globals.slide_paused = true;
-        },
-        mouseleave : function() {
-            globals.slide_paused = false;
-        }
-    });
-    $('.window').on({
+    if ( !globals.random_slide ) {
+        $('#left_switch').on({
+            click : function() {
+                switcher('left');
+            },
+            mouseover : function() {
+                globals.slide_paused = true;
+            },
+            mouseleave : function() {
+                globals.slide_paused = false;
+            }
+        });
+        $('#right_switch').on({
+            click : function() {
+                switcher('right');
+            },
+            mouseover : function() {
+                globals.slide_paused = true;
+            },
+            mouseleave : function() {
+                globals.slide_paused = false;
+            }
+        });
+        $('.window').on({
         mouseover : function() {
             globals.slide_paused = true;
         },
         mouseout : function() {
             globals.slide_paused = false;
         }
-    })
+    });
+    }
     
     function img_array_init() {
         populate_img_array();
@@ -100,12 +102,14 @@ $(document).ready(function() {
         slide_html += '    <div class="seesaw">';
         slide_html += '        <div class="bg-img" style="background-image: url(\'' + img_arrays.img_array[0] + '\')"></div>';
         slide_html += '    </div>';
-        slide_html += '    <div id="left_switch" class="switch">';
-        slide_html += left_chev;
-        slide_html += '    </div>';
-        slide_html += '    <div id="right_switch" class="switch">';
-        slide_html += right_chev;
-        slide_html += '    </div>';
+        if ( !globals.random_slide ) {
+            slide_html += '    <div id="left_switch" class="switch">';
+            slide_html += left_chev;
+            slide_html += '    </div>';
+            slide_html += '    <div id="right_switch" class="switch">';
+            slide_html += right_chev;
+            slide_html += '    </div>';
+        }
         slide_html += '</div>';
         
         $(globals.container).html(slide_html);
@@ -135,21 +139,32 @@ $(document).ready(function() {
         }
         
         function get_next_img_index() {
-            if( dir === 'right' ) {
-                if ( old_index === (img_arrays.img_array.length - 1)) {
-                    var next_index = 0;
+            if( !globals.random_slide ) {
+                if( dir === 'right' ) {
+                    if ( old_index === (img_arrays.img_array.length - 1)) {
+                        var next_index = 0;
+                    }
+                    else {
+                        var next_index = old_index + 1;
+                    }
                 }
                 else {
-                    var next_index = old_index + 1;
+                    if ( old_index === 0 ) {
+                        var next_index = img_arrays.img_array.length - 1;
+                    }
+                    else {
+                        var next_index = old_index - 1;
+                    }
                 }
             }
             else {
-                if ( old_index === 0 ) {
-                    var next_index = img_arrays.img_array.length - 1;
+                var random = Math.floor(Math.random() * (img_arrays.img_array.length - 1));
+                while(random === globals.last_slide || random === globals.before_last_slide) {
+                    random = Math.floor(Math.random() * 5);
                 }
-                else {
-                    var next_index = old_index - 1;
-                }
+                globals.before_last_slide = globals.last_slide;
+                globals.last_slide = random;
+                next_index = random;
             }
             return next_index;
         }
