@@ -23,8 +23,9 @@
 
 .window {
     width: 100%;
-    height: 500px;
+    height: 600px;
     overflow: hidden;
+    position: relative;
 }
 
 .seesaw {
@@ -47,4 +48,24 @@
     background-size: contain;
     background-repeat: no-repeat;
     float: left;
+}
+
+#left_switch {
+    left: 0;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#right_switch {
+    right: 0;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.switch {
+    width: 30px;
+    height: 60px;
+    background-color: rgba(100, 100, 100, 0.6);
+    position: absolute;
+    bottom: 45%;
 }
