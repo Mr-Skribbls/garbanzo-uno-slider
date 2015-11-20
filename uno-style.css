@@ -1,0 +1,50 @@
+/* ----- if js is disabled ----- */
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.no-JS {
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.no-JS img {
+    width: 100%;
+}
+
+/* ----- if js is enabled ----- */
+#uno-container {
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.window {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.seesaw {
+    width: 200%;
+    height: 100%;
+    clear: both;
+    position: relative;
+}
+
+.box {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.bg-img {
+    width: 50%;
+    height: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    float: left;
+}
